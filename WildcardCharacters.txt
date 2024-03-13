@@ -1,0 +1,28 @@
+import re
+
+def WildcardCharacters(str):
+    # Split the input into pattern and string
+    pattern, string = str.split()
+
+    # Replace + with ., * with .{3}, and *{N} with .{N}
+    pattern = pattern.replace('+', '.')
+    pattern = re.sub(r'\*\{(\d+)\}', r'.{\1}', pattern)
+    pattern = pattern.replace('*', '.{3}')
+    pattern = pattern.replace('$', '[1-9]')
+
+    # Match the pattern with the string
+    if re.fullmatch(pattern, string):
+        return 'true'
+    else:
+        return 'false'
+print(WildcardCharacters("++*{5} jtggggg"))
+
+'''
+int main() 
+{
+	cout << WildcardCharacters("++*{5} jtggggg") << endl; // true
+	cout << WildcardCharacters("+++++* abcdehhhhhh") << endl; // false
+	cout << WildcardCharacters("$**+*{2} 9mmmrrrkbb") << endl; // true
+	return 0;
+}
+'''
